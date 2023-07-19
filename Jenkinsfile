@@ -17,9 +17,19 @@ pipeline {
 //            }
 //        }
 
-        stage('Git checkout') {
+//        stage('Git checkout') {
+//            steps {
+//                git 'https://github.com/Antonppavlov/jmeter-start-in-jenkins.git'
+//            }
+//        }
+
+        stage('Jmeter checkout') {
             steps {
-                git 'https://github.com/Antonppavlov/jmeter-start-in-jenkins.git'
+                script {
+                    sh '''
+                        cd apache-jmeter-5.6.2/bin;
+                    '''
+                }
             }
         }
 
@@ -36,11 +46,11 @@ pipeline {
             }
         }
 
-        stage('Publish Performance test result report') {
-            steps {
-                perfReport filterRegex: '', showTrendGraphs: true, sourceDataFiles: 'apache-jmeter-5.6.2/bin/result.jtl'
-            }
-        }
+//        stage('Publish Performance test result report') {
+//            steps {
+//                perfReport filterRegex: '', showTrendGraphs: true, sourceDataFiles: 'apache-jmeter-5.6.2/bin/result.jtl'
+//            }
+//        }
 
 //        post {
 //            failure {
