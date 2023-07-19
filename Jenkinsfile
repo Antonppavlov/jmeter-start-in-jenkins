@@ -23,9 +23,13 @@ pipeline {
 
         stage('Jmeter checkout') {
             steps {
-                script{
+                script {
                     try {
-                        def jmeterAlreadyInstall = sh(script: 'cd apache-jmeter-5.6.2/bin', returnStdout: true).trim()
+                        script {
+                            sh '''
+                                cd apache-jmeter-5.6.2/bin;
+                               '''
+                        }
                     } catch (Exception ex) {
                         echo ex
                         echo 'Install Jmeter'
