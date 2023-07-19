@@ -27,11 +27,17 @@ pipeline {
                 echo '1'
 
                 script {
-                    GIT_COMMIT_EMAIL = sh (
-                            script: 'cd apache-jmeter-5.6.2/bin',
-                            returnStdout: true
-                    ).trim()
-                    echo "Git committer email: ${GIT_COMMIT_EMAIL}"
+//                    GIT_COMMIT_EMAIL = sh (
+//                            script: 'cd apache-jmeter-5.6.2/bin;',
+//                            returnStdout: true
+//                    ).trim()
+//                    echo "Git committer email: ${GIT_COMMIT_EMAIL}"
+
+                    try {
+                        def dir1 = sh(script:'cd apache-jmeter-5.6.2/bin', returnStdout:true).trim()
+                    } catch (Exception ex) {
+                        println("Unable to read dir1: ${ex}")
+                    }
                 }
 
 //               def jmeterAlreadyInstall = sh(
@@ -39,7 +45,7 @@ pipeline {
 //                        returnStdout: true
 //                ).trim()
 
-                echo "cd apache-jmeter-5.6.2/bin: ${jmeterAlreadyInstall}"
+//                echo "cd apache-jmeter-5.6.2/bin: ${jmeterAlreadyInstall}"
 
 
 //                script {
