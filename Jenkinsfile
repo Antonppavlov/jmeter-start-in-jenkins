@@ -27,7 +27,7 @@ pipeline {
                     try {
                         def jmeterAlreadyInstall = sh(script: 'cd apache-jmeter-5.6.2/bin', returnStdout: true).trim()
                     } catch (Exception ex) {
-                        echo 'ex'
+                        echo ex
                         echo 'Install Jmeter'
 
                         script {
