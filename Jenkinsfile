@@ -1,7 +1,6 @@
 #!groovy
 pipeline {
     agent any
-
     stages {
 
 //        stage('Start Notifications') {
@@ -16,81 +15,47 @@ pipeline {
 //            }
 //        }
 
-//        stage('Git checkout') {
-//            steps {
-//                git 'https://github.com/Antonppavlov/jmeter-start-in-jenkins.git'
-//            }
-//        }
-
-        stage('Jmeter checkout') {
+        stage('Git checkout') {
             steps {
-                echo '1'
-
-                script {
-//                    GIT_COMMIT_EMAIL = sh (
-//                            script: 'cd apache-jmeter-5.6.2/bin;',
-//                            returnStdout: true
-//                    ).trim()
-//                    echo "Git committer email: ${GIT_COMMIT_EMAIL}"
-
-                    try {
-                        def dir1 = sh(script:'cd apache-jmeter-5.6.2/bin', returnStdout:true).trim()
-                    } catch (Exception ex) {
-                        println("Unable to read dir1: ${ex}")
-                    }
-                }
-
-//               def jmeterAlreadyInstall = sh(
-//                        script: 'cd apache-jmeter-5.6.2/bin;',
-//                        returnStdout: true
-//                ).trim()
-
-//                echo "cd apache-jmeter-5.6.2/bin: ${jmeterAlreadyInstall}"
-
-
-//                script {
-////                    def GString jmeterAlreadyInstall = sh(script: "cd apache-jmeter-5.6.2/bin;", returnStdout: true).trim()
-//
-//
-//
-//
-//
-////                    echo jmeterAlreadyInstall
-//
-////                    if (jmeterAlreadyInstall.contains('can\'t cd to apache-jmeter' as java.lang.CharSequence)) {
-////                        echo 'Install Jmeter'
-////                        sh
-////                        '''
-////                           curl https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.2.tgz -o apache-jmeter-5.6.2.tgz;
-////                           tar -xvzf apache-jmeter-5.6.2.tgz;
-////                        '''
-////                    } else {
-////                        echo 'Jmeter already install'
-////                    }
-//
-//                }
-                echo '2'
+                git 'https://github.com/Antonppavlov/jmeter-start-in-jenkins.git'
             }
         }
 
-//        stage('Perf Tests') {
-//            steps {
-//                script {
-//                    sh '''
-//                        pwd; ls -ltrh;
-//                        java -version;
-//                        cd apache-jmeter-5.6.2/bin;
-//                        sh jmeter.sh -n -t ../../jmeter_start_in_jenkins.jmx -l result.jtl -Jhost=wordpress
-//                    '''
-//                }
-//            }
-//        }
+        stage('Jmeter checkout') {
+            steps {
+                try {
+                    def jmeterAlreadyInstall = sh(script: 'cd apache-jmeter-5.6.2/bin', returnStdout: true).trim()
+                } catch (Exception ex) {
+                    echo 'ex'
+                    echo 'Install Jmeter'
+                    sh
+                    '''
+                      curl https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.2.tgz -o apache-jmeter-5.6.2.tgz;
+                      tar -xvzf apache-jmeter-5.6.2.tgz;
+                '''
+                }
+            }
+        }
 
-//        stage('Publish Performance test result report') {
-//            steps {
-//                perfReport filterRegex: '', showTrendGraphs: true, sourceDataFiles: 'apache-jmeter-5.6.2/bin/result.jtl'
-//            }
-//        }
+
+        stage('Start Performance Tests') {
+            steps {
+                script {
+                    sh '''
+                        pwd; ls -ltrh;
+                        java -version;
+                        cd apache-jmeter-5.6.2/bin;
+                        sh jmeter.sh -n -t ../../jmeter_start_in_jenkins.jmx -l result.jtl -Jhost=wordpress
+                    '''
+                }
+            }
+        }
+
+        stage('Publish Performance test result report') {
+            steps {
+                perfReport filterRegex: '', showTrendGraphs: true, sourceDataFiles: 'apache-jmeter-5.6.2/bin/result.jtl'
+            }
+        }
 
 //        post {
 //            failure {
