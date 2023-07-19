@@ -26,7 +26,10 @@ pipeline {
             steps {
                 script {
                     def GString jmeterAlreadyInstall = sh(script: "cd apache-jmeter-5.6.2/bin;", returnStdout: true).trim()
+
+                    echo '123'
                     echo jmeterAlreadyInstall
+
                     if (jmeterAlreadyInstall.contains('can\'t cd to apache-jmeter' as java.lang.CharSequence)) {
                         echo 'Install Jmeter'
                         sh
