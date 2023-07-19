@@ -26,10 +26,18 @@ pipeline {
             steps {
                 echo '1'
 
-               def jmeterAlreadyInstall = sh(
-                        script: 'cd apache-jmeter-5.6.2/bin;',
-                        returnStdout: true
-                ).trim()
+                script {
+                    GIT_COMMIT_EMAIL = sh (
+                            script: 'cd apache-jmeter-5.6.2/bin',
+                            returnStdout: true
+                    ).trim()
+                    echo "Git committer email: ${GIT_COMMIT_EMAIL}"
+                }
+
+//               def jmeterAlreadyInstall = sh(
+//                        script: 'cd apache-jmeter-5.6.2/bin;',
+//                        returnStdout: true
+//                ).trim()
 
                 echo "cd apache-jmeter-5.6.2/bin: ${jmeterAlreadyInstall}"
 
