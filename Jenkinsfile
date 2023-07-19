@@ -27,18 +27,16 @@ pipeline {
                 script {
                     def GString jmeterAlreadyInstall = sh(script: "cd apache-jmeter-5.6.2/bin;", returnStdout: true).trim()
                     echo jmeterAlreadyInstall
-//                    if (jmeterAlreadyInstall.contains('can\'t cd to apache-jmeter' as java.lang.CharSequence)) {
-//                        echo 'Hello from main branch'
-//                        sh
-//                        '''
-//                            pwd; ls -ltrh;
-//                            java -version;
-//                            cd apache-jmeter-5.6.2/bin;
-//                            sh jmeter.sh -n -t ../../jmeter_start_in_jenkins.jmx -l result.jtl -Jhost=wordpress
-//                        '''
-//                    } else {
-//                        sh "echo 'Hello from ${env.BRANCH_NAME} branch!'"
-//                    }
+                    if (jmeterAlreadyInstall.contains('can\'t cd to apache-jmeter' as java.lang.CharSequence)) {
+                        echo 'Install Jmeter'
+                        sh
+                        '''
+                           curl https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.2.tgz -o apache-jmeter-5.6.2.tgz;
+                           tar -xvzf apache-jmeter-5.6.2.tgz;
+                        '''
+                    } else {
+                        echo 'Jmeter already install'
+                    }
 
                 }
             }
