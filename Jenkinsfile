@@ -23,16 +23,19 @@ pipeline {
 
         stage('Jmeter checkout') {
             steps {
-                try {
-                    def jmeterAlreadyInstall = sh(script: 'cd apache-jmeter-5.6.2/bin', returnStdout: true).trim()
-                } catch (Exception ex) {
-                    echo 'ex'
-                    echo 'Install Jmeter'
-                    sh
-                    '''
+                script{
+                    try {
+                        def jmeterAlreadyInstall = sh(script: 'cd apache-jmeter-5.6.2/bin', returnStdout: true).trim()
+                    } catch (Exception ex) {
+                        echo 'ex'
+                        echo 'Install Jmeter'
+
+                        sh
+                        '''
                       curl https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.2.tgz -o apache-jmeter-5.6.2.tgz;
                       tar -xvzf apache-jmeter-5.6.2.tgz;
-                '''
+                        '''
+                    }
                 }
             }
         }
