@@ -1,6 +1,5 @@
 #!groovy
 pipeline {
-
     agent any
 
     stages {
@@ -26,25 +25,37 @@ pipeline {
         stage('Jmeter checkout') {
             steps {
                 script {
-                    sh '''
-                        cd apache-jmeter-5.6.2/bin;
-                    '''
+                    def GString jmeterAlreadyInstall = sh(script: "cd apache-jmeter-5.6.2/bin;", returnStdout: true).trim()
+                    echo jmeterAlreadyInstall
+//                    if (jmeterAlreadyInstall.contains('can\'t cd to apache-jmeter' as java.lang.CharSequence)) {
+//                        echo 'Hello from main branch'
+//                        sh
+//                        '''
+//                            pwd; ls -ltrh;
+//                            java -version;
+//                            cd apache-jmeter-5.6.2/bin;
+//                            sh jmeter.sh -n -t ../../jmeter_start_in_jenkins.jmx -l result.jtl -Jhost=wordpress
+//                        '''
+//                    } else {
+//                        sh "echo 'Hello from ${env.BRANCH_NAME} branch!'"
+//                    }
+
                 }
             }
         }
 
-        stage('Perf Tests') {
-            steps {
-                script {
-                    sh '''
-                        pwd; ls -ltrh;
-                        java -version;
-                        cd apache-jmeter-5.6.2/bin;
-                        sh jmeter.sh -n -t ../../jmeter_start_in_jenkins.jmx -l result.jtl -Jhost=wordpress
-                    '''
-                }
-            }
-        }
+//        stage('Perf Tests') {
+//            steps {
+//                script {
+//                    sh '''
+//                        pwd; ls -ltrh;
+//                        java -version;
+//                        cd apache-jmeter-5.6.2/bin;
+//                        sh jmeter.sh -n -t ../../jmeter_start_in_jenkins.jmx -l result.jtl -Jhost=wordpress
+//                    '''
+//                }
+//            }
+//        }
 
 //        stage('Publish Performance test result report') {
 //            steps {
