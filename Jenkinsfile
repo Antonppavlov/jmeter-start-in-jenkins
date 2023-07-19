@@ -30,11 +30,12 @@ pipeline {
                         echo 'ex'
                         echo 'Install Jmeter'
 
-                        sh
-                        '''
-                      curl https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.2.tgz -o apache-jmeter-5.6.2.tgz;
-                      tar -xvzf apache-jmeter-5.6.2.tgz;
-                        '''
+                        script {
+                            sh '''
+                                curl https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.2.tgz -o apache-jmeter-5.6.2.tgz;
+                                tar -xvzf apache-jmeter-5.6.2.tgz;
+                               '''
+                        }
                     }
                 }
             }
