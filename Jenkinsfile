@@ -26,7 +26,7 @@ pipeline {
             steps {
                 echo '1'
 
-                jmeterAlreadyInstall = sh(
+               def jmeterAlreadyInstall = sh(
                         script: 'cd apache-jmeter-5.6.2/bin;',
                         returnStdout: true
                 ).trim()
