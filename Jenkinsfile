@@ -24,8 +24,10 @@ pipeline {
 
         stage('Jmeter checkout') {
             steps {
+                echo '1'
                 script {
 //                    def GString jmeterAlreadyInstall = sh(script: "cd apache-jmeter-5.6.2/bin;", returnStdout: true).trim()
+
 
                     jmeterAlreadyInstall = sh(
                             script: 'cd apache-jmeter-5.6.2/bin;',
@@ -47,6 +49,7 @@ pipeline {
 //                    }
 
                 }
+                echo '2'
             }
         }
 
