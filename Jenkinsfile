@@ -25,21 +25,26 @@ pipeline {
         stage('Jmeter checkout') {
             steps {
                 script {
-                    def GString jmeterAlreadyInstall = sh(script: "cd apache-jmeter-5.6.2/bin;", returnStdout: true).trim()
+//                    def GString jmeterAlreadyInstall = sh(script: "cd apache-jmeter-5.6.2/bin;", returnStdout: true).trim()
 
-                    echo '123'
+                    jmeterAlreadyInstall = sh(
+                            script: 'cd apache-jmeter-5.6.2/bin;',
+                            returnStdout: true
+                    ).trim()
+
+                    echo "cd apache-jmeter-5.6.2/bin: ${jmeterAlreadyInstall}"
                     echo jmeterAlreadyInstall
-
-                    if (jmeterAlreadyInstall.contains('can\'t cd to apache-jmeter' as java.lang.CharSequence)) {
-                        echo 'Install Jmeter'
-                        sh
-                        '''
-                           curl https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.2.tgz -o apache-jmeter-5.6.2.tgz;
-                           tar -xvzf apache-jmeter-5.6.2.tgz;
-                        '''
-                    } else {
-                        echo 'Jmeter already install'
-                    }
+//
+//                    if (jmeterAlreadyInstall.contains('can\'t cd to apache-jmeter' as java.lang.CharSequence)) {
+//                        echo 'Install Jmeter'
+//                        sh
+//                        '''
+//                           curl https://dlcdn.apache.org//jmeter/binaries/apache-jmeter-5.6.2.tgz -o apache-jmeter-5.6.2.tgz;
+//                           tar -xvzf apache-jmeter-5.6.2.tgz;
+//                        '''
+//                    } else {
+//                        echo 'Jmeter already install'
+//                    }
 
                 }
             }
