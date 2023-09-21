@@ -1,0 +1,20 @@
+services:
+  influxdb:
+    image: influxdb:1.8.3
+    restart: always
+    ports:
+      - 8086:8086
+    volumes:
+      - /Users/antonpavlov/Documents/hm_docker_service/influxdb:/var/lib/influxdb influxdb:1.8.3
+  grafana:
+    image: grafana/grafana
+    restart: always
+    depends_on:
+      - influxdb
+    ports:
+      - 3000:3000
+    volumes:
+      - /Users/antonpavlov/Documents/hm_docker_service/grafana:/var/lib/grafana
+volumes:
+  influxDb: {}
+  grafana: {}
